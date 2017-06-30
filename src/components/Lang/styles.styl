@@ -1,0 +1,19 @@
+@import "../../styles/common";
+
+.Lang {
+	color #879698
+	transition color $duration
+	font-weight $black
+	text-decoration none
+	font-size 20px
+	padding 5px
+	text-transform uppercase
+	text-align center
+	&:hover, &_active {
+		color #FFF
+	}
+	@media $phone {
+		padding 3px
+		font-size 16px
+	}
+}

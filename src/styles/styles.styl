@@ -1,0 +1,20 @@
+@import 'reset.styl'
+@import 'common.styl'
+
+
+/*** --- Webfonts --- ***/
+webfont('OpenSans', 'OpenSans', $regular);
+webfont('OpenSans', 'OpenSans-Bold', $bold);
+webfont('OpenSans', 'OpenSans-Semibold', $black);
+
+
+/*** --- Document --- ***/
+html,
+body {
+	height 100%
+	background $bgColor
+	color $textColor
+	font normal $fontSize/$lineHeight $fontFamily
+	-webkit-text-size-adjust 100%
+	smooth-font()
+}

@@ -1,0 +1,32 @@
+@import "../../styles/common";
+
+.HeaderContainer {
+	& {
+		padding 40px 0 80px
+		background $brandColor
+		margin-bottom -40px
+		@media $phone {
+			padding 30px 16px 30px
+			margin-bottom 0
+		}
+	}
+	&__title {
+		font-size 40px
+		font-weight $bold
+		line-height 1
+		color #FFF
+		text-transform uppercase
+		padding-right 70px
+		@media $verticalTablet {
+			font-size 32px
+		}
+		@media $phone {
+			font-size 24px
+		}
+	}
+	&__lang {
+		position absolute
+		top 0
+		right 0
+	}
+}

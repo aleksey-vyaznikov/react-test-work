@@ -1,0 +1,25 @@
+@import "../../styles/common";
+.Star {
+	width 18px
+	height 18px
+	cursor pointer
+	fill #CCC
+	transition fill $duration, transform $duration
+	padding-left 30px
+	@media $verticalPhone {
+		padding-left 12px
+	}
+	&:hover {
+		fill #dcb644
+		faster()
+	}
+	&_active {
+		fill #FF9800
+		&:hover {
+			fill #FF9800
+		}
+	}
+	&:active {
+		transform scale(0.9)
+	}
+}

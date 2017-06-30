@@ -1,0 +1,143 @@
+@import "../../styles/common";
+
+.User {
+	& {
+		background #FFF
+		width 100%
+		border-bottom 1px solid rgba(0,0,0,0.1)
+		&:last-child {
+			border-bottom 0
+		}
+		&_preview {
+			width 50%
+			padding-bottom 10px
+			padding-right 10px
+			box-sizing border-box
+			background-color transparent
+			border-bottom 0
+		}
+		&_isvideo {
+			width 100%
+		}
+	}
+	&__inner-cell {
+		padding 16px 32px
+		display flex
+		align-items center
+		@media $phone {
+			padding 16px
+		}
+	}
+	&__img {
+		width 60px
+		margin-right 24px
+		@media $phone {
+			width 40px
+			margin-right 16px
+		}
+		@media $verticalPhone {
+			width 32px
+			margin-right 8px
+		}
+		img {
+			width 100%
+		}
+	}
+	&__name {
+		flex 2
+		font-size 22px
+		text-transform uppercase
+		font-weight $black
+		line-height 1.1
+		margin-right 10px
+		@media $verticalTablet {
+			font-size 20px
+		}
+		@media $phone {
+			font-size 16px
+		}
+		@media $verticalPhone {
+			font-size 14px
+		}
+	}
+	&__age {
+		flex 1
+		font-size 20px
+		@media $phone {
+			font-size 14px
+		}
+	}
+	&__phone {
+		font-size 20px
+		@media $phone {
+			font-size 14px
+		}
+	}
+	&__preview {
+		& {
+			background #FFF
+			box-shadow 0 5px 10px rgba(0,0,0,0.2)
+			height 100%
+			width 100%
+			&:after {
+				content: ".";
+				display: block;
+				height: 0;
+				clear: both;
+				visibility: hidden;
+			}
+		}
+		
+		&__img {
+			width 60px
+			margin-right 24px
+			img {
+				width 100%
+			}
+		}
+		&__name {
+			flex 2
+			font-size 22px
+			text-transform uppercase
+		}
+		&__age {
+			flex 1
+			font-size 20px
+			margin-bottom 10px
+		}
+		&__phone {
+			font-size 20px
+			margin-bottom 10px
+		}
+	}
+	&__content {
+		& {
+			width 100%
+			padding 15px
+			box-sizing border-box
+			&_isvideo {
+				width 50%
+				float left
+				border none
+			}
+		}
+		
+	}
+	&__info {
+		float left
+	}
+	&__header {
+		width 100%
+		display flex
+		align-items center
+		margin-bottom 20px
+	}
+	&__video {
+		width 50%
+		float left
+		video {
+			width 100%
+			display block
+		}
+	}
+}

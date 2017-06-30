@@ -1,0 +1,56 @@
+{
+	"title": {
+		"ru": "Список пользователей",
+		"en": "Users list"
+	},
+	"lading": {
+		"ru": "загрузка",
+		"en": "loading"
+	},
+	"search": {
+		"ru": "поиск",
+		"en": "search"
+	},
+	"panel" : {
+		"sorting": {
+			"title" : {
+				"ru": "Cортировка",
+				"en": "Sort by"
+			},
+			"items": {
+				"id": {
+					"ru": "id",
+					"en": "id"
+				},
+				"name": {
+					"ru": "Имя",
+					"en": "Name"
+				},
+				"age": {
+					"ru": "Возраст",
+					"en": "Age"
+				}
+			}
+		},
+		"view": {
+			"title" : {
+				"ru": "Вид",
+				"en": "View"
+			},
+			"items": {
+				"table": {
+					"ru": "Таблица",
+					"en": "Table"
+				},
+				"preview": {
+					"ru": "Превью",
+					"en": "Preview"
+				}
+			}
+		}
+	},
+	"age": {
+		"ru": "лет",
+		"en": "years"
+	}
+}

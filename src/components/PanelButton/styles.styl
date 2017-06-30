@@ -1,0 +1,45 @@
+@import "../../styles/common";
+
+.PanelButton {
+	& {
+		display inline-flex
+		align-items center
+		// margin-right 10px
+		text-align center
+		cursor pointer
+		&:last-child {
+			margin-right 0
+		}
+
+	}
+	&__field {
+		display none
+		&:checked + label {
+			color #FFF
+			background $brandColor
+		}
+	}
+	&__name {
+		background #c1c1c1
+		padding 8px 15px
+		text-transform uppercase
+		font-weight bold
+		font-size 16px
+		box-sizing border-box
+		width 100%
+		transition background $duration, color $duration, transform $duration
+		// color $secondTextColor
+		transform translateZ(0)
+		will-change transform
+		@media $phone {
+		}
+		&:hover {
+			background #c1c1c1
+			color #FFF
+			faster()
+		}
+		&:active {
+			background darken(#c1c1c1, 20%)
+		}
+	}
+}
