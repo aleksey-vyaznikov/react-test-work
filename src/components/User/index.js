@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { getIsFavouriteUser } from 'utils/helpers.js'
 import Waypoint from 'react-waypoint';
+import ReactDOM from 'react-dom';
 import { CSSTransitionGroup } from 'react-transition-group'
 import GSAP from 'react-gsap-enhancer';
-import { TimelineMax } from 'gsap';
+import { TimelineMax, TweenMax } from 'gsap';
 import classNames from 'classnames';
 import Star from 'components/Star' 
 import styles from './styles.styl';
 import text from 'config/text.json';
+
 var timeline = new TimelineMax();
 function appearAnim(utils) {
 	return timeline
@@ -40,8 +42,29 @@ class User extends Component {
 	// componentWillLeave(callback) {
 	// 	this.addAnimation(leaveAnim, {callback: callback})
 	// }
+	constructor(props) {
+		super(props);
+	}
+	componentDidMount() {
+		var node = ReactDOM.findDOMNode(this);
+		timeline.fromTo(node, 0.35, {
+			opacity:0,
+			y:20
+		},{
+			opacity:1,
+			y:0
+		},  (this.props.num*0.12))
+	}
+	componentDidUnmount() {
+		var node = ReactDOM.findDOMNode(this);
+		timeline.clear()
+		timeline.to(node, 0.35, {
+			opacity:0,
+			height:0
+		},  (this.props.num*0.12))
+	}
 	render() {
-		let { id, name, image, age, phone, phrase, video, view, lang } = this.props;
+		let { id, name, image, age, phone, phrase, video, view, lang, toogleStar } = this.props;
 		let isFavourite = getIsFavouriteUser(id)
 		let itemStyle = classNames({
 			'User': true,
@@ -64,7 +87,7 @@ class User extends Component {
 						<span className="User__name">{name}</span>
 						<span className="User__age">{age} {text.age[lang]}</span>
 						<span className="User__phone">{phone}</span>
-						<span className="User__favorite" onClick={()=>this.props.toogleStar(id)}><Star className={starStyle}/></span>
+						<span className="User__favorite" onClick={()=>toogleStar(id)}><Star className={starStyle}/></span>
 					</div>
 				}
 				{ view == 'preview' &&
@@ -73,7 +96,7 @@ class User extends Component {
 							<div className="User__header">
 								<img className="User__img" src={'/images/'+image+'.svg'}/>
 								<span className="User__name">{name}</span>
-								<span className="User__favorite" onClick={()=>this.props.toogleStar(id)}><Star className={starStyle}/></span>
+								<span className="User__favorite" onClick={()=>toogleStar(id)}><Star className={starStyle}/></span>
 							</div>
 							<div className="User__age">{age} {text.age[lang]}</div>
 							<div className="User__phone">{phone}</div>
@@ -93,4 +116,4 @@ class User extends Component {
 	}
 }
 
-export default GSAP()(User)
+export default User

@@ -29,7 +29,7 @@ export default class UsersBlock extends Component {
 	}
 	render() {
 		this.hasMore = (this.props.users.length < this.props.allCount);
-		let { view, lang } = this.props;
+		let { view, lang, userStar } = this.props;
 		let style = classNames({
 			'UsersBlock__list': true,
 			[`UsersBlock__list_${view}`] : view
@@ -37,11 +37,9 @@ export default class UsersBlock extends Component {
 		return (
 			<div className="UsersBlock">
 				<div name='UsersBlock__list' className={style}>
-					<TransitionGroup>
 						{this.props.users.map( (user,i) => 
-							<User lang={lang} key={user.id} view={this.props.view || 'table'}  {...user} toogleStar={this.props.userStar}/>
+							<User lang={lang}  key={i} num={i} view={view || 'table'}  {...user} toogleStar={userStar}/>
 						)}
-					</TransitionGroup>
 				</div>
 				<div className="UsersBlock__loading" >
 					{ this.renderLoading() }

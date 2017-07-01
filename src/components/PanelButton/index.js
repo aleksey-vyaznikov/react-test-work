@@ -16,7 +16,7 @@ const PanelButton = ({ type, value, children, onClick, checked}) => (
 				name={type}
 				value={value}
 				onClick={e => onClick(type , e.target.value)}
-				defaultChecked={(value=='table' || value=='id') && true}/>
+				defaultChecked={checked}/>
 			<label htmlFor={value} className="PanelButton__name">{children}</label>
 		</div>
 	)

@@ -5,13 +5,16 @@ import { bindActionCreators } from 'redux';
 import UsersBlock from 'components/UsersBlock/';
 import * as actions from 'actions/user';
 
-function getSortableUsers(users, offset, sorting, name) {
+function filterUser(name, nameSearch) {
+	let nameSername = name.toLowerCase();
+	let sernameName = name.toLowerCase().split(' ').reverse().join(' ');
+	return (
+		nameSearch == '' || nameSername.includes(nameSearch) || sernameName.includes(nameSearch)
+	);
+}
+function getSortableUsers(users, offset, sorting, nameSearch) {
 	return users
-	.filter(m => {
-		return (
-			(name == '' || m.name.toLowerCase().includes(name))
-		);
-	})
+	.filter(m => filterUser(m.name, nameSearch))
 	.sort((a, b) => {
 		if (sorting == 'age') {
 			return a.age - b.age;
@@ -28,10 +31,11 @@ function getSortableUsers(users, offset, sorting, name) {
 function mapStateToProps(state, ownProps) {
 	let { users, offset, load } = state.users;
 	let { sorting, view, search }  = ownProps.location.query;
-	let name = search || ''
+	let nameSearch = search.toLowerCase() || '';
+	let filteringUsers = users.filter(m => filterUser(m.name, nameSearch));
 	return {
-		users: getSortableUsers(users, offset, sorting, name),
-		allCount: users.filter(m => (name == '' || m.name.toLowerCase().includes(name))).length,
+		users: getSortableUsers(filteringUsers, offset, sorting, nameSearch),
+		allCount: filteringUsers.length,
 		view: view || 'table',
 		offset: offset,
 		load: load

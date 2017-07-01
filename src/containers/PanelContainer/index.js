@@ -20,7 +20,7 @@ class Panel extends Component {
 	}
 	render() {
 		let {sorting, search, view} = this.props.location.query
-		let lang = this.props.lang
+		let lang = this.props.lang;
 		return (
 			<div className="Panel">
 				<div className="Panel__container">
@@ -32,7 +32,7 @@ class Panel extends Component {
 							<p className="Panel__group__name">{text.panel.sorting.title[lang]}</p>
 						</div>
 						<div className="Panel__buttons">
-							<PanelButton value="id" type="sorting" onClick={this.setSort} checked={sorting=='id' ? true : false}>
+							<PanelButton value="id" type="sorting" onClick={this.setSort} checked={(sorting=='id' || !sorting) ? true : false}>
 								{text.panel.sorting.items.id[lang]}
 							</PanelButton>
 							<PanelButton value="name" type="sorting" onClick={this.setSort} checked={sorting=='name' ? true : false} >
@@ -48,10 +48,10 @@ class Panel extends Component {
 							<p className="Panel__group__name">{text.panel.view.title[lang]}</p>
 						</div>
 						<div className="Panel__buttons">
-							<PanelButton value="table" type="view" onClick={this.setSort} checked={ view=='table' ? true : false} >
+							<PanelButton value="table" type="view" onClick={this.setSort} checked={ (view=='table' || !view) ? true : false} >
 								{text.panel.view.items.table[lang]}
 							</PanelButton>
-							<PanelButton value="preview" type="view" onClick={this.setSort} checked={view=='preview' ? true : false} >
+							<PanelButton value="preview" type="view" onClick={this.setSort} checked={ view=='preview' ? true : false} >
 								{text.panel.view.items.preview[lang]}
 							</PanelButton>
 						</div>
