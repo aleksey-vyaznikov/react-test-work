@@ -7,11 +7,16 @@
 		border-bottom 1px solid rgba(0,0,0,0.1)
 		opacity 0
 		transform translateY(40px)
+		// position absolute
+		position relative
+		// left 0
 		&:last-child {
 			border-bottom 0
 		}
 		&_preview {
-			height 243px
+			position relative
+			top 0 !important
+			height 246px
 			width 50%
 			display inline-block
 			vertical-align top
@@ -25,12 +30,24 @@
 				opacity 0
 				transform translateY(20px)
 			}
-			@media $verticaltablet {
-				height 210px
+			@media $tablet {
+				height 195px
+			}
+			@media $verticalTablet {
+				height 213px
+			}
+			@media $phone {
+				width 100%
+				height auto
+				padding 0
+				margin-bottom 10px
 			}
 		}
 		&_isvideo {
-			width 100%
+			width auto
+			@media tablet {
+				height 196px
+			}
 		}
 	}
 	&__inner-cell {
@@ -82,6 +99,7 @@
 	}
 	&__phone {
 		font-size 18px
+		padding-right 30px
 		@media $phone {
 			font-size 14px
 		}
@@ -131,6 +149,9 @@
 				width 50%
 				float left
 				border none
+				@media $phone {
+					width 100%
+				}
 			}
 		}
 		
@@ -150,6 +171,9 @@
 		video {
 			width 100%
 			display block
+		}
+		@media $phone {
+			width 100%
 		}
 	}
 }

@@ -8,14 +8,7 @@ export const loadUsers = () => dispatch => {
 	})
 }
 
-export const addUsers = (offset) => dispatch => {
-	dispatch({ type: 'ADD_USERS_START'})
-	setTimeout(function() {
-		dispatch({ type: 'ADD_USERS', payload: offset });
-	}, 0);
-}
-
-export const userStar = (id) => dispatch => {
+export const userStar = id => dispatch => {
 	dispatch ({
 		type: 'USER_STAR',
 		id

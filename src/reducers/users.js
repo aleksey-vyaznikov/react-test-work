@@ -19,14 +19,6 @@ export default function users(state = {
 			return {...state, load: false, error: action.payload}
 			break;
 		}
-		case 'ADD_USERS_START': {
-			return {...state, load: true, loaded: false}
-			break;
-		}
-		case 'ADD_USERS': {
-			return {...state, load: false, loaded: true, offset: action.payload }
-			break;
-		}
 		case 'USER_STAR': {
 			return {
 				...state,

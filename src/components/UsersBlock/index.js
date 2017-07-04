@@ -13,42 +13,24 @@ export default class UsersBlock extends Component {
 		this.props.loadUsers();
 		this.hasMore = true;
 	}
-	// handleInfiniteLoad() {
-	// 	var self = this;
-	// 	if (self.props.load) return;
-	// 	self.props.addUsers(self.props.users.length + 1)
-	// }
-	
-	// renderLoading() {
-	// 	if(!this.props.load && this.hasMore) return (
-	// 		<Waypoint
-	// 			onEnter={this.handleInfiniteLoad.bind(this)}
-	// 		/>
-	// 	)
-	// }
 	componentDidMount() {
-		let list = ReactDOM.findDOMNode(this);
-		this.heightList = $(list).height();
+		this.heightList = this.refs.list.offsetHeight;
 	}
 	componentDidUpdate() {
-		let list = ReactDOM.findDOMNode(this);
-		this.heightList = $(list).height();
+		this.heightList = this.refs.list.offsetHeight;
 	}
 	render() {
-		this.hasMore = (this.props.users.length < this.props.allCount);
 		let { view, lang, userStar } = this.props;
 		let style = classNames({
 			'UsersBlock__list': true,
 			[`UsersBlock__list_${view}`] : view
 		})
 		return (
-			<div className="UsersBlock">
+			<div className="UsersBlock" ref="list">
 				<div name='UsersBlock__list' className={style}>
-					<TransitionGroup>
-						{this.props.users.map( (user,i) => 
-							<User lang={lang} key={i} num={i} view={view || 'table'}  {...user} toogleStar={userStar} heightList={this.heightList}/>
-						)}
-					</TransitionGroup>
+					{this.props.users.map( (user,i) => 
+						<User lang={lang} key={user.id} num={i} view={view || 'table'} toogleStar={userStar} heightList={this.heightList} {...user}/>
+					)}
 				</div>
 			</div>
 		);

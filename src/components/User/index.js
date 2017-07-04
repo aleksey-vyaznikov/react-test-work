@@ -42,44 +42,48 @@ class User extends Component {
 	constructor(props) {
 		super(props)
 		this.show = this.show.bind(this);
+		this.state= {
+			num: this.props.num
+		}
 	}
 	show() {
-		// let isStartVisible = (this.props.num <= Math.floor((this.props.heightList)/80));
-		// var del  = isStartVisible ? (this.props.num*0.05 ) : 0;
-		var del = 0;
-		if ($(window).width() <= 992) del = 0;
+		let { user, header, inner } = this.refs;
+		TweenMax.to(user, 0.35, {
+			opacity:1,
+			y:0,
+			ease: Power2.easeOut
+		})
 		if (this.props.view == 'preview') {
-			let header  = $(this.node).find('.User__header');
-			let inner  = $(this.node).find('.User__inner');
-			let video  = $(this.node).find('.User__video');
 			TweenMax.to(header, 0.35,{
 						opacity:1,
 						y:0,
 						ease: Power2.easeOut
-					}).delay(del + 0.35)
+					}).delay(0.2)
 			TweenMax.to(inner, 0.35, {
 						opacity:1,
 						y:0,
 						ease: Power2.easeOut
-					}).delay(del + 0.45)
-		}
-		TweenMax.to(this.node, 0.35, {
-			opacity:1,
-			y:0,
-			ease: Power2.easeOut
-		}).delay(del)
+					}).delay(0.3)
+			}
 	}
-	componentDidUpdate() {
+
+	componentDidUpdate(props) {
+		// if (this.props.view == 'table') {
+		// 	console.log('1');
+		// 	TweenMax.to(this.refs.user, 0.5, {
+		// 		top: this.props.num * 80,
+		// 		ease: Power1.easeOut
+		// 	});
+		// }
 		this.scene.destroy();
-		this.scene = new ScrollMagic.Scene({triggerElement: this.node, triggerHook: 1, offset: 40})
+		this.scene = new ScrollMagic.Scene({triggerElement: this.refs.user, triggerHook: 1})
 			.on("enter", (e) => {
 				this.show()
 			})
 			.addTo(controller);
 	}
 	componentDidMount() {
-		this.node = ReactDOM.findDOMNode(this);
-		this.scene = new ScrollMagic.Scene({triggerElement: this.node, triggerHook: 1, offset: 40})
+		this.scene = new ScrollMagic.Scene({triggerElement: this.refs.user, triggerHook: 1})
 		this.scene.on("enter", (e) => {
 				this.show()
 			})
@@ -110,11 +114,13 @@ class User extends Component {
 			'Star': true,
 			'Star_active': favourite
 		});
-
+		let style = {
+			top: (view == 'table') ? this.state.num*80 : 0
+		}
 		return (
-			<div className={itemStyle}>
+			<div className={itemStyle} ref="user">
 				{ view == 'table' &&
-					<div name={this.props.i} key={this.props.i} className="User__inner-cell">
+					<div className="User__inner-cell">
 						<img className="User__img" src={'/images/'+image+'.svg'}/>
 						<span className="User__name">{name}</span>
 						<span className="User__age">{age} {pluralize(age, text.age[lang])}</span>
@@ -123,14 +129,14 @@ class User extends Component {
 					</div>
 				}
 				{ view == 'preview' &&
-					<div name={this.props.i} key={this.props.i} className="User__preview"  onMouseEnter={this.videoPlay.bind(this)} onMouseLeave={this.videoPause.bind(this)}>
+					<div className="User__preview"  onMouseEnter={this.videoPlay.bind(this)} onMouseLeave={this.videoPause.bind(this)}>
 						<div className={contentStyle}>
-							<div className="User__header">
+							<div className="User__header" ref="header">
 								<img className="User__img" src={'/images/'+image+'.svg'}/>
 								<span className="User__name">{name}</span>
 								<span className="User__favorite" onClick={()=>toogleStar(id)}><Star className={starStyle}/></span>
 							</div>
-							<div className="User__inner">
+							<div className="User__inner" ref="inner">
 								<div className="User__age">{age} {pluralize(age, text.age[lang])}</div>
 								<div className="User__phone">{phone}</div>
 								<span className="User__phrase">{phrase}</span>
