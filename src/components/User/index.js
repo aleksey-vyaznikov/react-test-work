@@ -42,9 +42,6 @@ class User extends Component {
 	constructor(props) {
 		super(props)
 		this.show = this.show.bind(this);
-		this.state= {
-			num: this.props.num
-		}
 	}
 	show() {
 		let { user, header, inner } = this.refs;
@@ -70,11 +67,11 @@ class User extends Component {
 	componentDidUpdate(props) {
 		// if (this.props.view == 'table') {
 		// 	console.log('1');
-		// 	TweenMax.to(this.refs.user, 0.5, {
-		// 		top: this.props.num * 80,
-		// 		ease: Power1.easeOut
-		// 	});
 		// }
+		TweenMax.set(this.refs.user, {
+			y: 40,
+			opacity: 0
+		});
 		this.scene.destroy();
 		this.scene = new ScrollMagic.Scene({triggerElement: this.refs.user, triggerHook: 1})
 			.on("enter", (e) => {
@@ -114,9 +111,6 @@ class User extends Component {
 			'Star': true,
 			'Star_active': favourite
 		});
-		let style = {
-			top: (view == 'table') ? this.state.num*80 : 0
-		}
 		return (
 			<div className={itemStyle} ref="user">
 				{ view == 'table' &&
