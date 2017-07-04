@@ -3,7 +3,6 @@
 .UsersBlock {
 	& {
 		grid-width(7)
-		min-height 100vh
 		float left
 		@media $verticalTablet {
 			width 100%
@@ -17,6 +16,12 @@
 			margin 0
 			transition height 1s
 			clearfix()
+			height calc(100vh - 80px)
+			overflow auto
+			@media $verticalTablet {
+				height auto
+				overflow hidden
+			}
 		}
 		&_table {
 			background #FFF

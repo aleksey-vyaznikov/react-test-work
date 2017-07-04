@@ -4,7 +4,7 @@ export default function users(state = {
 	error: null,
 	users: [],
 	visibleUsers: [],
-	offset: 10
+	offset: 150
 }, action) {
 	switch (action.type) {
 		case 'LOAD_DATA_START': {

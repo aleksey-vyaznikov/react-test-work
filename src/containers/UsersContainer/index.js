@@ -7,14 +7,13 @@ import * as actions from 'actions/user';
 
 function filterUser(name, nameSearch) {
 	let nameSername = name.toLowerCase();
-	let sernameName = name.toLowerCase().split(' ').reverse().join(' ');
+	let surnameName = name.toLowerCase().split(' ').reverse().join(' ');
 	return (
-		nameSearch == '' || nameSername.includes(nameSearch) || sernameName.includes(nameSearch)
+		nameSearch == '' || nameSername.includes(nameSearch) || surnameName.includes(nameSearch)
 	);
 }
-function getSortableUsers(users, offset, sorting, nameSearch) {
+function getSortableUsers(users, offset, sorting) {
 	return users
-	.filter(m => filterUser(m.name, nameSearch))
 	.sort((a, b) => {
 		if (sorting == 'age') {
 			return a.age - b.age;
@@ -25,16 +24,16 @@ function getSortableUsers(users, offset, sorting, nameSearch) {
 		if (sorting == 'name') {
 			return a.name > b.name ? 1 : a.name < b.name ? -1 : 0;
 		}
-	}).slice(0 , offset)
+	})
 }
 
 function mapStateToProps(state, ownProps) {
 	let { users, offset, load } = state.users;
 	let { sorting, view, search }  = ownProps.location.query;
-	let nameSearch = search.toLowerCase() || '';
-	let filteringUsers = users.filter(m => filterUser(m.name, nameSearch));
+	let nameSearch = search || '';
+	let filteringUsers = users.filter(m => filterUser(m.name, nameSearch.toLowerCase()));
 	return {
-		users: getSortableUsers(filteringUsers, offset, sorting, nameSearch),
+		users: getSortableUsers(filteringUsers, offset, sorting),
 		allCount: filteringUsers.length,
 		view: view || 'table',
 		offset: offset,

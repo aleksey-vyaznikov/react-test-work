@@ -3,13 +3,13 @@
 		"ru": "Список пользователей",
 		"en": "Users list"
 	},
-	"lading": {
-		"ru": "загрузка",
-		"en": "loading"
+	"loading": {
+		"ru": "Загрузка",
+		"en": "Loading"
 	},
 	"search": {
-		"ru": "поиск",
-		"en": "search"
+		"ru": "Поиск",
+		"en": "Search"
 	},
 	"panel" : {
 		"sorting": {
@@ -50,7 +50,7 @@
 		}
 	},
 	"age": {
-		"ru": "лет",
-		"en": "years"
+		"ru": "Лет",
+		"en": "Years"
 	}
 }

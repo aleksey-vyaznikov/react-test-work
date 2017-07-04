@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import { getIsFavouriteUser } from 'utils/helpers.js'
 import Waypoint from 'react-waypoint';
 import ReactDOM from 'react-dom';
 import { CSSTransitionGroup } from 'react-transition-group'
 import GSAP from 'react-gsap-enhancer';
 import { TimelineMax, TweenMax } from 'gsap';
+import ScrollMagic from 'scrollmagic';
+import { pluralize } from 'utils/helpers'
 import classNames from 'classnames';
 import Star from 'components/Star' 
 import styles from './styles.styl';
 import text from 'config/text.json';
+var controller = new ScrollMagic.Controller();
 
 var timeline = new TimelineMax();
 function appearAnim(utils) {
@@ -21,7 +23,7 @@ function appearAnim(utils) {
 			y:0,
 			ease: Power2.easeOut,
 			onComplete: utils.options.callback,
-		})
+		}, utils.options.num*0.2 )
 }
 
 function leaveAnim(utils) {
@@ -35,37 +37,64 @@ function leaveAnim(utils) {
 }
 
 
+
 class User extends Component {
-	// componentWillEnter(callback) {
-	// 	this.addAnimation(appearAnim, {callback: callback})
-	// }
-	// componentWillLeave(callback) {
-	// 	this.addAnimation(leaveAnim, {callback: callback})
-	// }
 	constructor(props) {
-		super(props);
+		super(props)
+		this.show = this.show.bind(this);
+	}
+	show() {
+		var del  = (this.props.num <= (this.props.heightList)/90) ? (this.props.num*0.12 ) : 0;
+		if ($(window).width() <= 992) del = 0;
+		if (this.props.view == 'preview') {
+			// let avatar = this.node
+			let header  = $(this.node).find('.User__header');
+			let inner  = $(this.node).find('.User__inner');
+			let video  = $(this.node).find('.User__video');
+			TweenMax.to(header, 0.35,{
+						opacity:1,
+						y:0,
+						ease: Power2.easeOut
+					}).delay(0.35)
+			TweenMax.to(inner, 0.35, {
+						opacity:1,
+						y:0,
+						ease: Power2.easeOut
+					}).delay(0.45)
+		}
+		TweenMax.to(this.node, 0.35, {
+			opacity:1,
+			y:0,
+			ease: Power2.easeOut
+		}).delay(del)
+	}
+	componentDidUpdate() {
+		this.scene.destroy();
+		this.scene = new ScrollMagic.Scene({triggerElement: this.node, triggerHook: 1})
+			.on("enter", (e) => {
+				this.show()
+			})
+			.addTo(controller);
 	}
 	componentDidMount() {
-		var node = ReactDOM.findDOMNode(this);
-		timeline.fromTo(node, 0.35, {
-			opacity:0,
-			y:20
-		},{
-			opacity:1,
-			y:0
-		},  (this.props.num*0.12))
+		this.node = ReactDOM.findDOMNode(this);
+		this.scene = new ScrollMagic.Scene({triggerElement: this.node, triggerHook: 1})
+		this.scene.on("enter", (e) => {
+				this.show()
+			})
+			.addTo(controller);
 	}
-	componentDidUnmount() {
-		var node = ReactDOM.findDOMNode(this);
-		timeline.clear()
-		timeline.to(node, 0.35, {
-			opacity:0,
-			height:0
-		},  (this.props.num*0.12))
+	componentWillUnmount() {
+		this.scene.destroy();
+	}
+	videoPlay() {
+		if (this.props.video) {this.refs.video.play()}
+	}
+	videoPause() {
+		if (this.props.video) {this.refs.video.pause()}
 	}
 	render() {
-		let { id, name, image, age, phone, phrase, video, view, lang, toogleStar } = this.props;
-		let isFavourite = getIsFavouriteUser(id)
+		let { id, name, image, age, phone, phrase, video, view, lang, favourite, toogleStar } = this.props;
 		let itemStyle = classNames({
 			'User': true,
 			'User_isvideo': video && view=='preview',
@@ -77,34 +106,37 @@ class User extends Component {
 		});
 		let starStyle = classNames({
 			'Star': true,
-			'Star_active': isFavourite
+			'Star_active': favourite
 		});
+
 		return (
 			<div className={itemStyle}>
 				{ view == 'table' &&
 					<div name={this.props.i} key={this.props.i} className="User__inner-cell">
 						<img className="User__img" src={'/images/'+image+'.svg'}/>
 						<span className="User__name">{name}</span>
-						<span className="User__age">{age} {text.age[lang]}</span>
+						<span className="User__age">{age} {pluralize(age, text.age[lang])}</span>
 						<span className="User__phone">{phone}</span>
 						<span className="User__favorite" onClick={()=>toogleStar(id)}><Star className={starStyle}/></span>
 					</div>
 				}
 				{ view == 'preview' &&
-					<div name={this.props.i} key={this.props.i} className="User__preview">
+					<div name={this.props.i} key={this.props.i} className="User__preview"  onMouseEnter={this.videoPlay.bind(this)} onMouseLeave={this.videoPause.bind(this)}>
 						<div className={contentStyle}>
 							<div className="User__header">
 								<img className="User__img" src={'/images/'+image+'.svg'}/>
 								<span className="User__name">{name}</span>
 								<span className="User__favorite" onClick={()=>toogleStar(id)}><Star className={starStyle}/></span>
 							</div>
-							<div className="User__age">{age} {text.age[lang]}</div>
-							<div className="User__phone">{phone}</div>
-							<span className="User__phrase">{phrase}</span>
+							<div className="User__inner">
+								<div className="User__age">{age} {pluralize(age, text.age[lang])}</div>
+								<div className="User__phone">{phone}</div>
+								<span className="User__phrase">{phrase}</span>
+							</div>
 						</div>
 						{video &&
 							<div className="User__video">
-								<video>
+								<video ref="video" loop={true}>
 									<source type="video/mp4" src={'/videos/'+video+'.mp4'} />
 								</video>
 							</div>

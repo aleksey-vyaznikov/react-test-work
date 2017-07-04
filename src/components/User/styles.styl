@@ -5,23 +5,36 @@
 		background #FFF
 		width 100%
 		border-bottom 1px solid rgba(0,0,0,0.1)
+		opacity 0
+		transform translateY(40px)
 		&:last-child {
 			border-bottom 0
 		}
 		&_preview {
+			height 243px
 			width 50%
+			display inline-block
+			vertical-align top
 			padding-bottom 10px
-			padding-right 10px
+			padding-right 5px
+			padding-left 5px
 			box-sizing border-box
 			background-color transparent
 			border-bottom 0
+			.User__header, .User__inner {
+				opacity 0
+				transform translateY(20px)
+			}
+			@media $verticaltablet {
+				height 210px
+			}
 		}
 		&_isvideo {
 			width 100%
 		}
 	}
 	&__inner-cell {
-		padding 16px 32px
+		padding 15px 32px
 		display flex
 		align-items center
 		@media $phone {
@@ -29,7 +42,7 @@
 		}
 	}
 	&__img {
-		width 60px
+		width 50px
 		margin-right 24px
 		@media $phone {
 			width 40px
@@ -62,23 +75,39 @@
 	}
 	&__age {
 		flex 1
-		font-size 20px
+		font-size 18px
 		@media $phone {
 			font-size 14px
 		}
 	}
 	&__phone {
-		font-size 20px
+		font-size 18px
 		@media $phone {
 			font-size 14px
 		}
 	}
+	&__phrase {
+		line-height 1.2
+		font-size 14px
+		display inline-block
+	}
 	&__preview {
 		& {
 			background #FFF
-			box-shadow 0 5px 10px rgba(0,0,0,0.2)
 			height 100%
 			width 100%
+			position relative
+			&:before {
+				content ''
+				position absolute
+				top 0
+				left 0
+				width 100%
+				height 100%
+				box-shadow 0 5px 10px rgba(0,0,0,0.4)
+				opacity 0.5
+				transition opacity $duration
+			}
 			&:after {
 				content: ".";
 				display: block;
@@ -86,28 +115,11 @@
 				clear: both;
 				visibility: hidden;
 			}
-		}
-		
-		&__img {
-			width 60px
-			margin-right 24px
-			img {
-				width 100%
+			&:hover {
+				&:before {
+					opacity 1
+				}
 			}
-		}
-		&__name {
-			flex 2
-			font-size 22px
-			text-transform uppercase
-		}
-		&__age {
-			flex 1
-			font-size 20px
-			margin-bottom 10px
-		}
-		&__phone {
-			font-size 20px
-			margin-bottom 10px
 		}
 	}
 	&__content {
@@ -130,7 +142,7 @@
 		width 100%
 		display flex
 		align-items center
-		margin-bottom 20px
+		margin-bottom 10px
 	}
 	&__video {
 		width 50%

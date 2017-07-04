@@ -19,7 +19,7 @@ class Panel extends Component {
 		this.props.onFilterChange(query);
 	}
 	render() {
-		let {sorting, search, view} = this.props.location.query
+		let { sorting, search, view } = this.props.location.query
 		let lang = this.props.lang;
 		return (
 			<div className="Panel">

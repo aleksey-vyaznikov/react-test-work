@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import Waypoint from 'react-waypoint';
 import { TransitionGroup } from 'react-transition-group'
-import GSAP from 'react-gsap-enhancer';
-import { TimelineMax } from 'gsap';
+import ReactDOM from 'react-dom';
 import User from '../User/';
 import classNames from 'classnames';
 import text from 'config/text.json';
@@ -14,18 +13,22 @@ export default class UsersBlock extends Component {
 		this.props.loadUsers();
 		this.hasMore = true;
 	}
-	handleInfiniteLoad() {
-		var self = this;
-		if (self.props.load) return;
-		self.props.addUsers(self.props.users.length + 4)
-	}
+	// handleInfiniteLoad() {
+	// 	var self = this;
+	// 	if (self.props.load) return;
+	// 	self.props.addUsers(self.props.users.length + 1)
+	// }
 	
-	renderLoading() {
-		if(!this.props.load && this.hasMore) return (
-			<Waypoint
-				onEnter={this.handleInfiniteLoad.bind(this)}
-			/>
-		)
+	// renderLoading() {
+	// 	if(!this.props.load && this.hasMore) return (
+	// 		<Waypoint
+	// 			onEnter={this.handleInfiniteLoad.bind(this)}
+	// 		/>
+	// 	)
+	// }
+	componentDidMount() {
+		let list = ReactDOM.findDOMNode(this);
+		this.heightList = $(list).height;
 	}
 	render() {
 		this.hasMore = (this.props.users.length < this.props.allCount);
@@ -37,13 +40,11 @@ export default class UsersBlock extends Component {
 		return (
 			<div className="UsersBlock">
 				<div name='UsersBlock__list' className={style}>
+					<TransitionGroup>
 						{this.props.users.map( (user,i) => 
-							<User lang={lang}  key={i} num={i} view={view || 'table'}  {...user} toogleStar={userStar}/>
+							<User lang={lang} key={i} num={i} view={view || 'table'}  {...user} toogleStar={userStar} heightList={this.heightList}/>
 						)}
-				</div>
-				<div className="UsersBlock__loading" >
-					{ this.renderLoading() }
-					{this.hasMore && <p>{text.lading[lang]}...</p> }
+					</TransitionGroup>
 				</div>
 			</div>
 		);
