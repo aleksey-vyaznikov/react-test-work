@@ -46,7 +46,7 @@ class User extends Component {
 	show() {
 		// let isStartVisible = (this.props.num <= Math.floor((this.props.heightList)/80));
 		// var del  = isStartVisible ? (this.props.num*0.05 ) : 0;
-		del = 0;
+		var del = 0;
 		if ($(window).width() <= 992) del = 0;
 		if (this.props.view == 'preview') {
 			let header  = $(this.node).find('.User__header');
