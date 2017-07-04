@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import Waypoint from 'react-waypoint';
-import { TransitionGroup } from 'react-transition-group'
 import ReactDOM from 'react-dom';
 import User from '../User/';
 import classNames from 'classnames';
 import text from 'config/text.json';
 import styles from './styles.styl'
+import ScrollMagic from 'scrollmagic';
+
+
+var controller = new ScrollMagic.Controller();
 
 export default class UsersBlock extends Component {
 	constructor(props) {
@@ -29,7 +32,7 @@ export default class UsersBlock extends Component {
 			<div className="UsersBlock" ref="list">
 				<div name='UsersBlock__list' className={style}>
 					{this.props.users.map( (user,i) => 
-						<User lang={lang} key={user.id} num={i} view={view || 'table'} toogleStar={userStar} heightList={this.heightList} {...user}/>
+						<User lang={lang} key={user.id} num={i} view={view || 'table'} toogleStar={userStar} heightList={this.heightList} controller={controller} {...user}/>
 					)}
 				</div>
 			</div>

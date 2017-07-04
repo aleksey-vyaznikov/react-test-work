@@ -10,32 +10,6 @@ import classNames from 'classnames';
 import Star from 'components/Star' 
 import styles from './styles.styl';
 import text from 'config/text.json';
-var controller = new ScrollMagic.Controller();
-
-
-function appearAnim(utils) {
-	return timeline
-		.fromTo(utils.target, 0.35, {
-			opacity: 0.001,
-			y:20,
-		}, {
-			opacity: 1,
-			y:0,
-			ease: Power2.easeOut,
-			onComplete: utils.options.callback,
-		}, utils.options.num*0.2 )
-}
-
-function leaveAnim(utils) {
-	return new TimelineMax()
-		.to(utils.target, 0.25, {
-			height: 0	,
-			opacity:0,
-			ease: Power1.easeIn,
-			onComplete: utils.options.callback,
-		})
-}
-
 
 
 class User extends Component {
@@ -65,9 +39,6 @@ class User extends Component {
 	}
 
 	componentDidUpdate(props) {
-		// if (this.props.view == 'table') {
-		// 	console.log('1');
-		// }
 		TweenMax.set(this.refs.user, {
 			y: 40,
 			opacity: 0
@@ -77,14 +48,14 @@ class User extends Component {
 			.on("enter", (e) => {
 				this.show()
 			})
-			.addTo(controller);
+			.addTo(this.props.controller);
 	}
 	componentDidMount() {
 		this.scene = new ScrollMagic.Scene({triggerElement: this.refs.user, triggerHook: 1})
 		this.scene.on("enter", (e) => {
 				this.show()
 			})
-			.addTo(controller);
+			.addTo(this.props.controller);
 	}
 	componentWillUnmount() {
 		this.scene.destroy();
