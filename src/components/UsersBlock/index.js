@@ -28,7 +28,11 @@ export default class UsersBlock extends Component {
 	// }
 	componentDidMount() {
 		let list = ReactDOM.findDOMNode(this);
-		this.heightList = $(list).height;
+		this.heightList = $(list).height();
+	}
+	componentDidUpdate() {
+		let list = ReactDOM.findDOMNode(this);
+		this.heightList = $(list).height();
 	}
 	render() {
 		this.hasMore = (this.props.users.length < this.props.allCount);

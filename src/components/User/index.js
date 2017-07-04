@@ -3,7 +3,7 @@ import Waypoint from 'react-waypoint';
 import ReactDOM from 'react-dom';
 import { CSSTransitionGroup } from 'react-transition-group'
 import GSAP from 'react-gsap-enhancer';
-import { TimelineMax, TweenMax } from 'gsap';
+import { TweenMax } from 'gsap';
 import ScrollMagic from 'scrollmagic';
 import { pluralize } from 'utils/helpers'
 import classNames from 'classnames';
@@ -12,7 +12,7 @@ import styles from './styles.styl';
 import text from 'config/text.json';
 var controller = new ScrollMagic.Controller();
 
-var timeline = new TimelineMax();
+
 function appearAnim(utils) {
 	return timeline
 		.fromTo(utils.target, 0.35, {
@@ -44,10 +44,11 @@ class User extends Component {
 		this.show = this.show.bind(this);
 	}
 	show() {
-		var del  = (this.props.num <= (this.props.heightList)/90) ? (this.props.num*0.12 ) : 0;
+		// let isStartVisible = (this.props.num <= Math.floor((this.props.heightList)/80));
+		// var del  = isStartVisible ? (this.props.num*0.05 ) : 0;
+		del = 0;
 		if ($(window).width() <= 992) del = 0;
 		if (this.props.view == 'preview') {
-			// let avatar = this.node
 			let header  = $(this.node).find('.User__header');
 			let inner  = $(this.node).find('.User__inner');
 			let video  = $(this.node).find('.User__video');
@@ -55,12 +56,12 @@ class User extends Component {
 						opacity:1,
 						y:0,
 						ease: Power2.easeOut
-					}).delay(0.35)
+					}).delay(del + 0.35)
 			TweenMax.to(inner, 0.35, {
 						opacity:1,
 						y:0,
 						ease: Power2.easeOut
-					}).delay(0.45)
+					}).delay(del + 0.45)
 		}
 		TweenMax.to(this.node, 0.35, {
 			opacity:1,
@@ -70,7 +71,7 @@ class User extends Component {
 	}
 	componentDidUpdate() {
 		this.scene.destroy();
-		this.scene = new ScrollMagic.Scene({triggerElement: this.node, triggerHook: 1})
+		this.scene = new ScrollMagic.Scene({triggerElement: this.node, triggerHook: 1, offset: 40})
 			.on("enter", (e) => {
 				this.show()
 			})
@@ -78,7 +79,7 @@ class User extends Component {
 	}
 	componentDidMount() {
 		this.node = ReactDOM.findDOMNode(this);
-		this.scene = new ScrollMagic.Scene({triggerElement: this.node, triggerHook: 1})
+		this.scene = new ScrollMagic.Scene({triggerElement: this.node, triggerHook: 1, offset: 40})
 		this.scene.on("enter", (e) => {
 				this.show()
 			})
@@ -94,6 +95,7 @@ class User extends Component {
 		if (this.props.video) {this.refs.video.pause()}
 	}
 	render() {
+
 		let { id, name, image, age, phone, phrase, video, view, lang, favourite, toogleStar } = this.props;
 		let itemStyle = classNames({
 			'User': true,
