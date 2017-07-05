@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import text from 'config/text.json';
 import styles from './styles.styl'
 import ScrollMagic from 'scrollmagic';
+import { CSSTransitionGroup } from 'react-transition-group';
 
 
 var controller = new ScrollMagic.Controller();
@@ -22,6 +23,7 @@ export default class UsersBlock extends Component {
 	componentDidUpdate() {
 		this.heightList = this.refs.list.offsetHeight;
 	}
+
 	render() {
 		let { view, lang, userStar } = this.props;
 		let style = classNames({
